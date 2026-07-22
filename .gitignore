@@ -1,0 +1,80 @@
+# ==========================================
+# Secrets y credenciales (NUNCA commitear)
+# ==========================================
+.env
+.env.*
+!.env.example
+firebase/serviceAccountKey.json
+firebase/*.json
+!firebase/.gitkeep
+
+# Certificados y llaves privadas
+*.pem
+*.key
+*.p12
+*.pfx
+*.crt
+
+# Backups y dumps de base de datos
+*.bak
+*.sql
+*.dump
+
+# Claude Code local
+.claude/settings.local.json
+
+# ==========================================
+# Python
+# ==========================================
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# ==========================================
+# Virtual environment
+# ==========================================
+venv/
+env/
+.venv/
+ENV/
+
+# ==========================================
+# Django
+# ==========================================
+*.log
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+media/
+staticfiles/
+migrations/__pycache__/
+
+# Mantener la estructura de migrations pero no archivos generados temporales
+# (Las migraciones SI se commitean, son parte del codigo)
+
+# ==========================================
+# IDEs / Herramientas
+# ==========================================
+.vscode/
+.idea/
+.claude/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# ==========================================
+# Coverage / tests
+# ==========================================
+htmlcov/
+.coverage
+.coverage.*
+.pytest_cache/
+.tox/
