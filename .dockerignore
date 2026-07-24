@@ -1,0 +1,35 @@
+# Entornos virtuales
+venv/
+.venv/
+env/
+ENV/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+
+# Secretos (NUNCA dentro de la imagen)
+.env
+.env.*
+!.env.example
+firebase/*.json
+!firebase/.gitkeep
+
+# Git y herramientas
+.git/
+.gitignore
+.claude/
+.vscode/
+.idea/
+
+# Datos locales y generados
+media/
+staticfiles/
+*.log
+*.sqlite3
+
+# Docker
+Dockerfile
+docker-compose.yml
+.dockerignore
