@@ -15,7 +15,7 @@ JWT, 2FA y control de acceso por roles.
 ![DRF](https://img.shields.io/badge/DRF-3.17-A30000?style=for-the-badge&logo=django&logoColor=white)
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-16-4169E1?style=for-the-badge&logo=postgresql&logoColor=white)
 ![Docker](https://img.shields.io/badge/Docker-ready-2496ED?style=for-the-badge&logo=docker&logoColor=white)
-![License](https://img.shields.io/badge/License-Completar-lightgrey?style=for-the-badge)
+![License](https://img.shields.io/badge/License-AGPL--3.0-blue?style=for-the-badge)
 
 </div>
 
@@ -295,7 +295,14 @@ python manage.py test
 
 ## 📄 Licencia
 
-`<Completar: definir la licencia del proyecto (ej. MIT, Apache 2.0 o privada).>`
+Este proyecto se distribuye bajo la licencia **GNU Affero General Public License v3.0 (AGPL-3.0)**.
+
+Esto significa que puedes usar, modificar y redistribuir el código, pero **cualquier obra
+derivada —incluso si se ofrece como servicio a través de una red— debe publicarse también
+bajo AGPL-3.0 y poner su código fuente a disposición**. Se eligió esta licencia por
+compatibilidad con las dependencias del sistema de reconocimiento de imágenes (Ultralytics YOLO).
+
+Consulta el archivo [LICENSE](LICENSE) para el texto completo.
 
 ---
 
