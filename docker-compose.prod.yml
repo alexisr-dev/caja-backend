@@ -1,0 +1,53 @@
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: caja_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    # Sin "ports": la BD solo se accede desde la red interna de Docker
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER} -d ${DB_NAME}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  web:
+    # Imagen publicada por GitHub Actions (no se construye en el VPS)
+    image: ghcr.io/alexisr-dev/caja-backend:latest
+    container_name: caja_web
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      # "environment" gana sobre "env_file": esto garantiza produccion
+      # aunque el .env todavia diga core.settings.development
+      DJANGO_SETTINGS_MODULE: core.settings.production
+      DB_HOST: db
+    command: >
+      sh -c "python manage.py migrate --noinput &&
+             gunicorn core.wsgi:application
+               --bind 0.0.0.0:8000
+               --workers 3
+               --timeout 60
+               --access-logfile -
+               --error-logfile -"
+    volumes:
+      # Uploads (fotos de productos, boletas PDF): sin esto se pierden en cada redeploy
+      - media_data:/app/media
+      # Credencial de Firebase: excluida de la imagen porque es publica
+      - ./firebase/serviceAccountKey.json:/app/firebase/serviceAccountKey.json:ro
+    # Solo loopback: Nginx/Caddy hace de proxy inverso hacia este puerto
+    ports:
+      - "127.0.0.1:8000:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+
+volumes:
+  pgdata:
+  media_data:
