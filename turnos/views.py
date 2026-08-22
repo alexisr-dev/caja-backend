@@ -56,7 +56,10 @@ class TurnoCerrarView(APIView):
 
         return Response(TurnoSerializer(turno).data)
 
-@extend_schema(tags=['turnos'])
+@extend_schema(
+    tags=['turnos'],
+    responses={200: TurnoSerializer, 204: None},
+)
 class TurnoActivoView(APIView):
     permission_classes = [IsAdminOrVendedor]
 
@@ -65,10 +68,7 @@ class TurnoActivoView(APIView):
             vendedor=request.user, estado=TurnoCaja.Estado.ABIERTO,
         ).first()
         if not turno:
-            return Response(
-                {'detail': 'No hay turno activo.', 'codigo': 'sin_turno_activo'},
-                status=status.HTTP_404_NOT_FOUND,
-            )
+            return Response(status=status.HTTP_204_NO_CONTENT)
         return Response(TurnoSerializer(turno).data)
 
 @extend_schema(tags=['turnos'])

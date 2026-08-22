@@ -134,8 +134,37 @@ cp .env.example .env              # y editar con tus valores
 
 # 5. Migraciones y ejecución
 python manage.py migrate
+python manage.py seed_demo        # opcional: cuentas de demostración (ver abajo)
 python manage.py runserver
 ```
+
+### 🎭 Cuentas de demostración
+
+Para que alguien pueda **probar la aplicación sin acceso al correo de las cuentas**, el comando
+`seed_demo` crea dos usuarios marcados con `es_demo=True`. Esas cuentas —y solo esas— omiten el
+código de verificación de 6 dígitos al iniciar sesión:
+
+```bash
+python manage.py seed_demo                      # crea lo que falte
+python manage.py seed_demo --reset              # restablece contraseñas y reactiva
+docker compose exec web python manage.py seed_demo
+```
+
+| Panel | Email | Contraseña | Rol |
+|-------|-------|-----------|-----|
+| Administración (`/admin` del frontend) | `demo.admin@cajasmart.dev` | `DemoAdmin2025!` | `ADMIN` |
+| Caja (`/caja` del frontend) | `demo.vendedor@cajasmart.dev` | `DemoVendedor2025!` | `VENDEDOR` |
+
+Las contraseñas se pueden sobrescribir con `DEMO_ADMIN_PASSWORD` / `DEMO_VENDEDOR_PASSWORD` en el
+`.env`; si lo haces, actualiza también `VITE_DEMO_*` en el frontend, que es donde se muestran.
+
+> ⚠️ Cualquier otro usuario `ADMIN` o `VENDEDOR` **sigue exigiendo el 2FA** de 6 dígitos. Para ver
+> ese flujo completo: entra con el admin demo → **Usuarios → Nuevo usuario** → crea una cuenta con
+> tu propio correo y rol *Vendedor* o *Administrador* → cierra sesión e inicia con ella; el código
+> llegará a tu email. (Con rol *Cliente* no aplica: no usa 2FA y el frontend web lo rechaza.)
+>
+> Las cuentas demo tienen `is_staff=False` a propósito: no pueden entrar al admin de Django
+> (`/admin/`), que usa sesión y no pasa por 2FA.
 
 ---
 
@@ -160,6 +189,7 @@ Todas las variables se definen en un archivo `.env` en la raíz (usa [`.env.exam
 | `GOOGLE_OAUTH_CLIENT_IDS` | Client IDs autorizados para Google Sign-In |
 | `IA_SERVICE_URL` · `IA_SERVICE_API_KEY` | URL y API Key del microservicio de IA |
 | `IGV_PORCENTAJE` | Porcentaje de IGV aplicado (ej. `0.18`) |
+| `DEMO_ADMIN_PASSWORD` · `DEMO_VENDEDOR_PASSWORD` | Contraseñas de las cuentas de `seed_demo` (públicas a propósito) |
 
 > 💡 **Nota Docker:** dentro de la red de contenedores la base de datos se resuelve por el nombre de servicio `db`. El `docker-compose.yml` ya sobrescribe `DB_HOST=db` automáticamente, así que en tu `.env` puedes dejar `DB_HOST=localhost` para el uso local.
 

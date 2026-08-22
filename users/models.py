@@ -64,6 +64,13 @@ class CustomUser(AbstractUser):
     )
     avatar_url = models.URLField(blank=True)
 
+    es_demo = models.BooleanField(
+        'Cuenta demo',
+        default=False,
+        db_index=True,
+        help_text='Cuenta de demostracion: omite la verificacion 2FA de 6 digitos al iniciar sesion.',
+    )
+
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS: list[str] = []
 

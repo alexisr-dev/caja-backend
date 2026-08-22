@@ -100,7 +100,11 @@ class LoginView(APIView):
                 status=status.HTTP_403_FORBIDDEN,
             )
 
-        if user.es_cliente:
+        # Los clientes nunca usan 2FA. Las cuentas demo tampoco: existen para que un
+        # visitante entre al panel sin acceso al buzon de correo de la cuenta.
+        if user.es_cliente or user.es_demo:
+            if user.es_demo:
+                logger.info('LOGIN_DEMO email=%s rol=%s', user.email, user.rol)
             data = _emitir_sesion(user, extra={'requiere_2fa': False})
             return Response(data)
 

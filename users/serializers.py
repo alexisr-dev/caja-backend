@@ -13,9 +13,9 @@ class UserSerializer(serializers.ModelSerializer):
         fields = (
             'id', 'email', 'first_name', 'last_name', 'rol',
             'telefono', 'direccion', 'dni',
-            'avatar_url', 'perfil_completo',
+            'avatar_url', 'perfil_completo', 'es_demo',
         )
-        read_only_fields = ('id', 'email', 'rol', 'avatar_url', 'perfil_completo')
+        read_only_fields = ('id', 'email', 'rol', 'avatar_url', 'perfil_completo', 'es_demo')
 
 class RegistroSerializer(serializers.Serializer):
 
@@ -94,9 +94,10 @@ class UsuarioAdminSerializer(serializers.ModelSerializer):
         model = CustomUser
         fields = (
             'id', 'email', 'first_name', 'last_name', 'rol',
-            'telefono', 'dni', 'is_active', 'fecha_registro',
+            'telefono', 'dni', 'is_active', 'fecha_registro', 'es_demo',
         )
-        read_only_fields = ('id', 'fecha_registro')
+
+        read_only_fields = ('id', 'fecha_registro', 'es_demo')
 
     def validate_email(self, value):
         value = value.lower().strip()
