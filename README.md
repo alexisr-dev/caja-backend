@@ -164,7 +164,7 @@ Las contraseñas se pueden sobrescribir con `DEMO_ADMIN_PASSWORD` / `DEMO_VENDED
 > llegará a tu email. (Con rol *Cliente* no aplica: no usa 2FA y el frontend web lo rechaza.)
 >
 > Las cuentas demo tienen `is_staff=False` a propósito: no pueden entrar al admin de Django
-> (`/admin/`), que usa sesión y no pasa por 2FA.
+> (`/django-admin/`), que usa sesión y no pasa por 2FA.
 
 ---
 
@@ -215,7 +215,7 @@ Recursos disponibles una vez arriba:
 
 | Recurso | URL |
 |---------|-----|
-| 🔧 Panel de administración | http://localhost:8000/admin/ |
+| 🔧 Panel de administración | http://localhost:8000/django-admin/ |
 | 📘 Swagger UI | http://localhost:8000/api/schema/swagger/ |
 | 📗 Redoc | http://localhost:8000/api/schema/redoc/ |
 | 📄 Esquema OpenAPI | http://localhost:8000/api/schema/ |
